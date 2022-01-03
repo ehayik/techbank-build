@@ -1,6 +1,6 @@
 package com.github.playground.techbank.account.cmd;
 
-import com.github.playground.techbank.cqrs.core.AbstractCommand;
+import com.github.playground.techbank.cqrs.core.Command;
 import com.github.playground.techbank.cqrs.core.CommandDispatcher;
 import com.github.playground.techbank.cqrs.core.CommandHandler;
 import lombok.NonNull;
@@ -15,15 +15,14 @@ import java.util.NoSuchElementException;
 public final class AccountCommandDispatcher implements CommandDispatcher {
 
 	@SuppressWarnings("java:S3740")
-	private final Map<Class<? extends AbstractCommand>, CommandHandler> routes;
+	private final Map<Class<? extends Command>, CommandHandler> routes;
 
 	public AccountCommandDispatcher() {
 		this(new HashMap<>());
 	}
 
 	@Override
-	public <T extends AbstractCommand> void registerHandler(@NonNull Class<T> commandType,
-			@NonNull CommandHandler<T> handler) {
+	public <T extends Command> void registerHandler(@NonNull Class<T> commandType, @NonNull CommandHandler<T> handler) {
 
 		if (routes.containsKey(commandType))
 			throw new IllegalArgumentException(
@@ -33,7 +32,7 @@ public final class AccountCommandDispatcher implements CommandDispatcher {
 	}
 
 	@Override
-	public void send(@NonNull AbstractCommand command) {
+	public void send(@NonNull Command command) {
 		var handler = routes.get(command.getClass());
 
 		if (handler == null)

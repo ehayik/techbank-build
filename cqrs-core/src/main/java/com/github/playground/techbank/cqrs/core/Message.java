@@ -1,6 +1,6 @@
 package com.github.playground.techbank.cqrs.core;
 
-public interface Message<I> {
+public sealed interface Message<I> permits Command,Event {
 
 	I getId();
 

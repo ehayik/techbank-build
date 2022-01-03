@@ -59,4 +59,12 @@ subprojects {
             mavenBom("org.springframework.boot:spring-boot-dependencies:${springBoot}")
         }
     }
+
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += '--enable-preview'
+    }
+
+    tasks.withType(Test) {
+        jvmArgs += "--enable-preview"
+    }
 }

@@ -8,11 +8,15 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public abstract class AbstractEvent implements Message<String> {
+public abstract non-sealed class Event implements Message<String> {
 
 	@NonNull
 	private final String id;
 
 	private final int version;
+
+	protected Event(String id) {
+		this(id, 0);
+	}
 
 }

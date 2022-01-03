@@ -1,6 +1,6 @@
 package com.github.playground.techbank.account.cmd;
 
-import com.github.playground.techbank.cqrs.core.AbstractCommand;
+import com.github.playground.techbank.cqrs.core.Command;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Value
 @ToString(callSuper = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class WithdrawFundsCommand extends AbstractCommand {
+public class WithdrawFundsCommand extends Command {
 
 	BigDecimal amount;
 

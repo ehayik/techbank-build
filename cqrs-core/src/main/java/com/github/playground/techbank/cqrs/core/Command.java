@@ -6,7 +6,7 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @RequiredArgsConstructor
-public abstract class AbstractCommand implements Message<String> {
+public abstract non-sealed class Command implements Message<String> {
 
 	@NonNull
 	private final String id;

@@ -3,6 +3,7 @@ package com.github.playground.techbank.account.cmd;
 import com.github.playground.techbank.account.common.*;
 import com.github.playground.techbank.cqrs.core.AggregateRoot;
 import com.github.playground.techbank.cqrs.core.Event;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.math.BigDecimal;
@@ -10,13 +11,14 @@ import java.time.LocalDate;
 
 import static java.math.BigDecimal.ZERO;
 
+@NoArgsConstructor
 public final class AccountAggregate extends AggregateRoot<String> {
 
 	private boolean active;
 
 	private BigDecimal balance;
 
-	void open(@NonNull OpenAccountCommand command) {
+	public AccountAggregate(OpenAccountCommand command) {
 		raiseEvent(AccountOpenedEvent.builder().id(command.getId()).accountHolder(command.getAccountHolder())
 				.createdDate(LocalDate.now()).accountType(command.getAccountType())
 				.openingBalance(command.getOpeningBalance()).build());

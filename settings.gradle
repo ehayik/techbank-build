@@ -1,0 +1,6 @@
+rootProject.name = 'techbank-build'
+include 'cqrs-core'
+include 'account-common'
+include 'account-cmd'
+include 'account-query'
+

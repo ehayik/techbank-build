@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import static java.math.BigDecimal.ZERO;
 
 @NoArgsConstructor
-public final class AccountAggregate extends AggregateRoot<String> {
+public final class AccountAggregate extends AggregateRoot {
 
 	private boolean active;
 
@@ -22,6 +22,10 @@ public final class AccountAggregate extends AggregateRoot<String> {
 		raiseEvent(AccountOpenedEvent.builder().id(command.getId()).accountHolder(command.getAccountHolder())
 				.createdDate(LocalDate.now()).accountType(command.getAccountType())
 				.openingBalance(command.getOpeningBalance()).build());
+	}
+
+	public AccountAggregate(int version) {
+		super(version);
 	}
 
 	private void apply(@NonNull AccountOpenedEvent event) {

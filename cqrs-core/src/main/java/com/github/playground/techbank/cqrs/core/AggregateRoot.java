@@ -12,16 +12,21 @@ import static java.util.Collections.unmodifiableList;
 
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class AggregateRoot<I> {
+public abstract class AggregateRoot {
 
 	@EqualsAndHashCode.Include
-	protected I id;
+	protected String id;
 
-	private int version;
+	private final int version;
 
 	private final List<Event> uncommittedChanges;
 
-	protected AggregateRoot() {
+	public AggregateRoot() {
+		this(0);
+	}
+
+	protected AggregateRoot(int version) {
+		this.version = version;
 		uncommittedChanges = new LinkedList<>();
 	}
 
@@ -40,7 +45,7 @@ public abstract class AggregateRoot<I> {
 		events.forEach(this::apply);
 	}
 
-	public Optional<I> getId() {
+	public Optional<String> getId() {
 		return Optional.ofNullable(id);
 	}
 

@@ -3,17 +3,22 @@ package com.github.playground.techbank.account.cmd.infrastructure;
 import com.github.playground.techbank.account.cmd.domain.AccountAggregate;
 import com.github.playground.techbank.cqrs.core.ConcurrencyException;
 import com.github.playground.techbank.cqrs.core.Event;
+import com.github.playground.techbank.cqrs.core.EventProducer;
 import com.github.playground.techbank.cqrs.core.EventStore;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Component
 @RequiredArgsConstructor
-public final class AccountEventStore implements EventStore<AccountAggregate> {
+final class AccountEventStore implements EventStore<AccountAggregate> {
 
 	private final EventStoreRecordRepository eventStoreRepository;
+
+	private final EventProducer accountEventEventProducer;
 
 	@Override
 	public void save(@NonNull AccountAggregate aggregate) {
@@ -32,9 +37,9 @@ public final class AccountEventStore implements EventStore<AccountAggregate> {
 			var persistedEvent = eventStoreRepository
 					.save(EventStoreRecord.of(aggregateId, AccountAggregate.class, event));
 
-			// if (persistedEvent != null) {
-			// TODO: produce event to Kafka
-			// }
+			if (persistedEvent != null) {
+				accountEventEventProducer.produce(event);
+			}
 		}
 	}
 

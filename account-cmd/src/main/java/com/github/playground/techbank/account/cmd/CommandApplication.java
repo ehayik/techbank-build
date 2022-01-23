@@ -1,7 +1,6 @@
 package com.github.playground.techbank.account.cmd;
 
 import com.github.playground.techbank.account.cmd.domain.*;
-import com.github.playground.techbank.account.cmd.infrastructure.AccountEventStore;
 import com.github.playground.techbank.account.cmd.infrastructure.EventStoreRecordRepository;
 import com.github.playground.techbank.cqrs.core.EventSourcingHandler;
 import com.github.playground.techbank.cqrs.core.EventStore;
@@ -37,11 +36,6 @@ public class CommandApplication {
 	EventSourcingHandler<AccountAggregate> accountAggregateEventSourcingHandler(
 			EventStore<AccountAggregate> eventStore) {
 		return new AccountEventSourcingHandler(eventStore);
-	}
-
-	@Bean
-	EventStore<AccountAggregate> eventStore(EventStoreRecordRepository eventStoreRecordRepository) {
-		return new AccountEventStore(eventStoreRecordRepository);
 	}
 
 }

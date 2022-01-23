@@ -1,15 +1,17 @@
-package com.github.playground.techbank.account.cmd;
+package com.github.playground.techbank.account.cmd.domain;
 
 import com.github.playground.techbank.cqrs.core.Command;
 import com.github.playground.techbank.cqrs.core.CommandDispatcher;
 import com.github.playground.techbank.cqrs.core.CommandHandler;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+@Slf4j
 @RequiredArgsConstructor
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public final class AccountCommandDispatcher implements CommandDispatcher {
@@ -29,6 +31,7 @@ public final class AccountCommandDispatcher implements CommandDispatcher {
 					"A handler is already registered for the given command " + commandType.getSimpleName());
 
 		routes.put(commandType, handler);
+		LOG.debug("Registered handler for command {}", commandType.getSimpleName());
 	}
 
 	@Override

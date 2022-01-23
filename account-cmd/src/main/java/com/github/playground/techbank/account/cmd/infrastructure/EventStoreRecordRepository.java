@@ -1,4 +1,4 @@
-package com.github.playground.techbank.cqrs.core;
+package com.github.playground.techbank.account.cmd.infrastructure;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

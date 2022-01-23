@@ -1,4 +1,4 @@
-package com.github.playground.techbank.account.cmd;
+package com.github.playground.techbank.account.cmd.domain;
 
 import com.github.playground.techbank.account.common.AccountType;
 import com.github.playground.techbank.cqrs.core.Command;

@@ -1,5 +1,6 @@
-package com.github.playground.techbank.cqrs.core;
+package com.github.playground.techbank.account.cmd.infrastructure;
 
+import com.github.playground.techbank.cqrs.core.Event;
 import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

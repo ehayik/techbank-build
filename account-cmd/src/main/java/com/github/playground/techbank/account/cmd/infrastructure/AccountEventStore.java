@@ -1,18 +1,19 @@
-package com.github.playground.techbank.account.cmd;
+package com.github.playground.techbank.account.cmd.infrastructure;
 
-import com.github.playground.techbank.cqrs.core.*;
+import com.github.playground.techbank.account.cmd.domain.AccountAggregate;
+import com.github.playground.techbank.cqrs.core.ConcurrencyException;
+import com.github.playground.techbank.cqrs.core.Event;
+import com.github.playground.techbank.cqrs.core.EventStore;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static java.util.stream.Collectors.toList;
-
 @RequiredArgsConstructor
 public final class AccountEventStore implements EventStore<AccountAggregate> {
 
-	private EventStoreRecordRepository eventStoreRepository;
+	private final EventStoreRecordRepository eventStoreRepository;
 
 	@Override
 	public void save(@NonNull AccountAggregate aggregate) {
@@ -45,7 +46,7 @@ public final class AccountEventStore implements EventStore<AccountAggregate> {
 			throw new NoSuchElementException("Incorrect account ID provided!");
 		}
 
-		return eventStream.stream().map(EventStoreRecord::eventData).collect(toList());
+		return eventStream.stream().map(EventStoreRecord::eventData).toList();
 	}
 
 }

@@ -1,8 +1,9 @@
-package com.github.playground.techbank.account.cmd;
+package com.github.playground.techbank.account.cmd.domain;
 
 import com.github.playground.techbank.account.common.*;
 import com.github.playground.techbank.cqrs.core.AggregateRoot;
 import com.github.playground.techbank.cqrs.core.Event;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
@@ -11,6 +12,7 @@ import java.time.LocalDate;
 
 import static java.math.BigDecimal.ZERO;
 
+@Getter
 @NoArgsConstructor
 public final class AccountAggregate extends AggregateRoot {
 
@@ -54,6 +56,9 @@ public final class AccountAggregate extends AggregateRoot {
 
 		if (!active)
 			throw new IllegalStateException("Funds cannot be withdrawn from a closed account!");
+
+		if (amount.compareTo(balance) > 0)
+			throw new IllegalStateException("Withdrawal declined, insufficient funds!");
 
 		raiseEvent(new FundsWithdrawnEvent(id, amount));
 	}

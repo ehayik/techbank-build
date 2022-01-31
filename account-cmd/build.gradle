@@ -2,12 +2,12 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+	implementation project(':cqrs-core')
+	implementation project(':account-common')
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.kafka:spring-kafka'
-
-	implementation project(':cqrs-core')
-	implementation project(':account-common')
 
 	testImplementation 'org.springframework.kafka:spring-kafka-test'
 }

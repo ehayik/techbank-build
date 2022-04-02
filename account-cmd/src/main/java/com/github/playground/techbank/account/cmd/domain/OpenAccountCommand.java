@@ -8,6 +8,7 @@ import lombok.ToString;
 import lombok.Value;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Value
 @ToString(callSuper = true)
@@ -19,6 +20,10 @@ public class OpenAccountCommand extends Command {
 	AccountType accountType;
 
 	BigDecimal openingBalance;
+
+	public OpenAccountCommand(String accountHolder, AccountType accountType, BigDecimal openingBalance) {
+		this(UUID.randomUUID().toString(), accountHolder, accountType, openingBalance);
+	}
 
 	public OpenAccountCommand(@NonNull String id, @NonNull String accountHolder, @NonNull AccountType accountType,
 			@NonNull BigDecimal openingBalance) {

@@ -18,6 +18,7 @@ public class CommandApplication {
 	}
 
 	@Bean
+	@SuppressWarnings("unused")
 	AccountCommandDispatcher commandDispatcher(AccountService accountService) {
 		var dispatcher = new AccountCommandDispatcher();
 		dispatcher.registerHandler(OpenAccountCommand.class, accountService::open);
@@ -28,11 +29,13 @@ public class CommandApplication {
 	}
 
 	@Bean
+	@SuppressWarnings("unused")
 	AccountService accountService(EventSourcingHandler<AccountAggregate> accountAggregateEventSourcingHandler) {
 		return new AccountService(accountAggregateEventSourcingHandler);
 	}
 
 	@Bean
+	@SuppressWarnings("unused")
 	EventSourcingHandler<AccountAggregate> accountAggregateEventSourcingHandler(
 			EventStore<AccountAggregate> eventStore) {
 		return new AccountEventSourcingHandler(eventStore);

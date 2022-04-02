@@ -7,8 +7,8 @@ spring:
       host: localhost
       port: 27017
       database: bankAccount
-      username: userx
-      password: 1234
+      username: root
+      password: Pa$$w0rd
       authentication-database: admin
   kafka:
     producer:

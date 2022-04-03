@@ -1,5 +1,6 @@
 package com.github.playground.techbank.account.cmd.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.github.playground.techbank.account.common.AccountType;
 import com.github.playground.techbank.cqrs.core.Command;
 import lombok.EqualsAndHashCode;
@@ -21,6 +22,7 @@ public class OpenAccountCommand extends Command {
 
 	BigDecimal openingBalance;
 
+	@JsonCreator
 	public OpenAccountCommand(String accountHolder, AccountType accountType, BigDecimal openingBalance) {
 		this(UUID.randomUUID().toString(), accountHolder, accountType, openingBalance);
 	}

@@ -16,9 +16,8 @@ class AccountsRestController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public AccountResource openAccount(@RequestBody AccountResource account) {
-        var command = new OpenAccountCommand(account.accountHolder(), account.accountType(), account.openingBalance());
+    public AccountResource openAccount(@RequestBody OpenAccountCommand command) {
         commandDispatcher.send(command);
-        return AccountResource.of(command);
+        return new AccountResource(command.getId());
     }
 }

@@ -22,34 +22,30 @@ final class AccountEventStore implements EventStore<AccountAggregate> {
 
 	@Override
 	public void save(@NonNull AccountAggregate aggregate) {
-		var aggregateId = aggregate.getId().orElse(null);
-		var expectedVersion = aggregate.getVersion();
-		var eventStream = eventStoreRepository.findByAggregateId(aggregateId);
-
-		if (expectedVersion != -1 && eventStream.get(eventStream.size() - 1).version() != expectedVersion) {
-			throw new ConcurrencyException();
-		}
-
-		var version = expectedVersion;
+		var aggregateId = aggregate.getId().orElseThrow();
+		var accountRecordedEvents = eventStoreRepository.findByAggregateId(aggregateId);
+		assertVersion(accountRecordedEvents, aggregate.getVersion());
+		var version = aggregate.getVersion();
 
 		for (var event : aggregate.getUncommittedChanges()) {
 			event.setVersion(version++);
-			var persistedEvent = eventStoreRepository
-					.save(EventStoreRecord.of(aggregateId, AccountAggregate.class, event));
-
-			if (persistedEvent != null) {
-				accountEventEventProducer.produce(event);
-			}
+			eventStoreRepository.save(EventStoreRecord.of(aggregateId, AccountAggregate.class, event));
+			accountEventEventProducer.produce(event);
 		}
+	}
+
+	private static void assertVersion(List<EventStoreRecord> accountRecordedEvents, int expectedVersion) {
+		if (expectedVersion == -1 || accountRecordedEvents.isEmpty()) return;
+		EventStoreRecord tailEvent = accountRecordedEvents.get(accountRecordedEvents.size() - 1);
+		if (tailEvent.version() != expectedVersion) throw new ConcurrencyException();
 	}
 
 	@Override
 	public List<Event> get(String aggregateId) {
 		var eventStream = eventStoreRepository.findByAggregateId(aggregateId);
 
-		if (eventStream.isEmpty()) {
+		if (eventStream.isEmpty())
 			throw new NoSuchElementException("Incorrect account ID provided!");
-		}
 
 		return eventStream.stream().map(EventStoreRecord::eventData).toList();
 	}

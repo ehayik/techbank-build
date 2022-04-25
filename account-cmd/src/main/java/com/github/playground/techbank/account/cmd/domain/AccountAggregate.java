@@ -14,6 +14,7 @@ import static java.math.BigDecimal.ZERO;
 
 @Getter
 @NoArgsConstructor
+
 public final class AccountAggregate extends AggregateRoot {
 
 	private boolean active;

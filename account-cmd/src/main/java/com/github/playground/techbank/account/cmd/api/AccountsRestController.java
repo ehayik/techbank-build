@@ -12,12 +12,13 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 class AccountsRestController {
 
-    private final CommandDispatcher commandDispatcher;
+	private final CommandDispatcher commandDispatcher;
 
-    @PostMapping
-    @ResponseStatus(CREATED)
-    public AccountResource openAccount(@RequestBody OpenAccountCommand command) {
-        commandDispatcher.send(command);
-        return new AccountResource(command.getId());
-    }
+	@PostMapping
+	@ResponseStatus(CREATED)
+	public AccountResource openAccount(@RequestBody OpenAccountCommand command) {
+		commandDispatcher.send(command);
+		return new AccountResource(command.getId());
+	}
+
 }

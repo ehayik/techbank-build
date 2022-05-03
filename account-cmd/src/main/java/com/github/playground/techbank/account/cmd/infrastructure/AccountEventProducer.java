@@ -25,7 +25,6 @@ final class AccountEventProducer implements EventProducer {
 
 		var asyncSendResult = kafkaTemplate.send(topic, event);
 		asyncSendResult.addCallback(new ListenableFutureCallbackImpl(event.getId(), topic));
-		LOG.debug("Produced event {} to topic {}", event.getId(), topic);
 	}
 
 	@RequiredArgsConstructor

@@ -1,27 +1,27 @@
 package com.github.playground.techbank.account.query;
 
 import com.github.playground.techbank.account.common.AccountType;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.Hibernate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BankAccount implements Serializable {
 
 	@Id
-	@EqualsAndHashCode.Include
 	private String id;
 
 	private String accountHolder;
@@ -45,4 +45,17 @@ public class BankAccount implements Serializable {
 		balance = balance.subtract(amount);
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) return true;
+		if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false;
+		BankAccount that = (BankAccount) other;
+		return id != null && Objects.equals(id, that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return getClass().hashCode();
+	}
 }
+

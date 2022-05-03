@@ -35,9 +35,11 @@ final class AccountEventStore implements EventStore<AccountAggregate> {
 	}
 
 	private static void assertVersion(List<EventStoreRecord> accountRecordedEvents, int expectedVersion) {
-		if (expectedVersion == -1 || accountRecordedEvents.isEmpty()) return;
+		if (expectedVersion == -1 || accountRecordedEvents.isEmpty())
+			return;
 		EventStoreRecord tailEvent = accountRecordedEvents.get(accountRecordedEvents.size() - 1);
-		if (tailEvent.version() != expectedVersion) throw new ConcurrencyException();
+		if (tailEvent.version() != expectedVersion)
+			throw new ConcurrencyException();
 	}
 
 	@Override

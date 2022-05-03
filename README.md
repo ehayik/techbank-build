@@ -27,3 +27,7 @@ curl --request POST \
         --header 'content-type: application/json' \
         --data '{"accountHolder": "Johnny Terrory", "accountType": "CURRENT", "openingBalance": 10000}'
 ```
+
+### References
+
+- [Can Your Kafka Consumers Handle a Poison Pill?](https://www.confluent.io/blog/spring-kafka-can-your-kafka-consumers-handle-a-poison-pill/)

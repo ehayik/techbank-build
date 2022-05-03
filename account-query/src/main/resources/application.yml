@@ -18,10 +18,19 @@ spring:
       bootstrap-servers: localhost:9092
       group-id: bankAccountConsumer
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # Configures the Spring Kafka ErrorHandlingDeserializer that delegates to the 'real' deserializers
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       properties:
         spring:
           json:
             trusted:
               packages: '*'
+          # Delegate deserializers
+          deserializer:
+              key:
+                delegate:
+                  class: org.apache.kafka.common.serialization.StringDeserializer
+              value:
+                delegate:
+                  class: org.springframework.kafka.support.serializer.JsonDeserializer
